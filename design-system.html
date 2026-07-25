@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System — Meridian</title>
+<meta name="description" content="The Meridian design system — colour tokens, typography, spacing and the full component library.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  .ds { display: grid; grid-template-columns: 200px 1fr; gap: var(--s7); align-items: start; padding-top: calc(var(--nav-h) + var(--s7)); }
+  .ds__nav { position: sticky; top: calc(var(--nav-h) + var(--s4)); display: grid; gap: 2px; }
+  .ds__nav a { font-family: var(--f-num); font-weight: 600; font-size: .8rem; color: var(--ink-3); padding: 8px 0 8px 14px; border-left: 1px solid var(--line); transition: color .25s, border-color .25s; }
+  .ds__nav a:hover { color: var(--ink); border-color: var(--gold); }
+  .ds__sec { padding-bottom: var(--s8); margin-bottom: var(--s8); border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--nav-h) + var(--s4)); }
+  .ds__sec:last-child { border-bottom: 0; }
+  .ds__sec > h2 { margin-bottom: var(--s2); }
+  .ds__sec > .muted { margin-bottom: var(--s6); max-width: 62ch; }
+  .demo { padding: var(--s6); border: 1px solid var(--line); border-radius: var(--r3); background: var(--surface); }
+  .demo + .demo { margin-top: var(--s4); }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s3); }
+  .sw { border: 1px solid var(--line); border-radius: var(--r2); overflow: hidden; }
+  .sw__c { height: 72px; }
+  .sw__m { padding: 11px 13px; }
+  .sw__n { font-family: var(--f-num); font-weight: 700; font-size: .68rem; letter-spacing: .06em; }
+  .sw__v { font-size: .72rem; color: var(--ink-3); margin-top: 4px; }
+  .type-row { padding: var(--s4) 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 180px 1fr; gap: var(--s4); align-items: baseline; }
+  .type-row small { font-family: var(--f-num); font-weight: 600; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .space-row { display: grid; grid-template-columns: 90px 1fr; gap: var(--s3); align-items: center; margin-bottom: 8px; }
+  .space-row i { display: block; height: 20px; background: var(--gold); border-radius: 3px; }
+  .space-row b { font-family: var(--f-num); font-weight: 700; font-size: .74rem; }
+  .cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  @media (max-width: 1000px) { .ds { grid-template-columns: 1fr; } .ds__nav { position: static; grid-auto-flow: column; overflow-x: auto; } .ds__nav a { border-left: 0; border-bottom: 1px solid var(--line); white-space: nowrap; } }
+  @media (max-width: 700px) { .cols-3 { grid-template-columns: 1fr; } .type-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav__in">
+    <a class="brand" href="index.html" aria-label="Meridian home"><svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand__word">MERI<b>D</b>IAN</span></a>
+    <div class="nav__links">
+      <a href="inventory.html">Inventory</a><a href="inventory.html?fuel=Electric">Electric</a><a href="compare.html">Compare</a><a href="index.html#financing">Financing</a><a href="design-system.html" aria-current="page">Design system</a>
+    </div>
+    <div class="nav__tools">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme"><span class="theme-toggle__knob"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg><svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      <button class="iconbtn" type="button" data-open-search aria-label="Search inventory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <button class="iconbtn" type="button" data-open-saved aria-label="Saved vehicles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="dot-badge" data-saved-count hidden>0</span></button>
+      <button class="iconbtn nav__menu" type="button" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="shell ds">
+    <nav class="ds__nav" aria-label="Sections">
+      <a href="#colour">Colour</a><a href="#type">Typography</a><a href="#space">Spacing</a>
+      <a href="#buttons">Buttons</a><a href="#forms">Forms</a><a href="#badges">Badges &amp; chips</a>
+      <a href="#card">Vehicle card</a><a href="#ribbon">Spec ribbon</a><a href="#feedback">Feedback</a><a href="#states">States</a>
+    </nav>
+
+    <div>
+      <div style="margin-bottom:var(--s8)">
+        <p class="eyebrow eyebrow--gold">Meridian</p>
+        <h1 class="display" style="font-size:clamp(2.6rem,6vw,4.5rem);margin:var(--s4) 0 var(--s3)">Design system</h1>
+        <p class="lead">Every token and component the Meridian storefront is built from. Switch the theme in the nav — everything here responds live.</p>
+      </div>
+
+      <section class="ds__sec" id="colour">
+        <h2 class="h2">Colour</h2>
+        <p class="muted">Ink and paper carry the interface; gold is the single accent, spent with restraint. Both themes share the same token names, so components never hard-code a colour.</p>
+        <div class="swatches" id="swatches"></div>
+      </section>
+
+      <section class="ds__sec" id="type">
+        <h2 class="h2">Typography</h2>
+        <p class="muted">Space Grotesk sets every heading, Inter carries body copy, and Manrope — with tabular figures — handles all numbers, from prices to performance.</p>
+        <div class="demo">
+          <div class="type-row"><small>Display / Space Grotesk</small><span class="display" style="font-size:2.6rem">Curated</span></div>
+          <div class="type-row"><small>H1 / Space Grotesk</small><span class="h1">The collection</span></div>
+          <div class="type-row"><small>H2 / Space Grotesk</small><span class="h2">Hand-picked</span></div>
+          <div class="type-row"><small>Lead / Inter</small><span class="lead">Independently inspected, road-verified, delivered worldwide.</span></div>
+          <div class="type-row"><small>Body / Inter</small><span>Every vehicle passes a 216-point inspection before it reaches your screen.</span></div>
+          <div class="type-row"><small>Numeric / Manrope</small><span class="num" style="font-weight:800;font-size:1.8rem">€168,400 · 480 hp · 3.3s</span></div>
+          <div class="type-row"><small>Eyebrow / Manrope</small><span class="eyebrow eyebrow--gold">Featured this week</span></div>
+        </div>
+      </section>
+
+      <section class="ds__sec" id="space">
+        <h2 class="h2">Spacing</h2>
+        <p class="muted">An 8-point scale keeps rhythm consistent from a chip's padding to the space between sections.</p>
+        <div class="demo" id="spaceDemo"></div>
+      </section>
+
+      <section class="ds__sec" id="buttons">
+        <h2 class="h2">Buttons</h2>
+        <p class="muted">Pill geometry, Manrope caps. Gold is the primary call to action, reserved for the one action that matters most on a screen.</p>
+        <div class="demo">
+          <div class="row" style="margin-bottom:var(--s4)">
+            <button class="btn btn--gold">Reserve vehicle</button>
+            <button class="btn btn--solid">Book test drive</button>
+            <button class="btn btn--line">View details</button>
+            <button class="btn btn--ghost">Cancel</button>
+            <button class="btn btn--gold" disabled>Sold</button>
+          </div>
+          <div class="row">
+            <button class="btn btn--gold btn--lg">Large</button>
+            <button class="btn btn--line btn--sm">Small</button>
+            <a class="link-arrow" href="#buttons">Text link <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="ds__sec" id="forms">
+        <h2 class="h2">Forms</h2>
+        <p class="muted">Validation runs on blur and clears the instant a field becomes valid. Errors state the cause and never clear the field.</p>
+        <div class="demo cols-3" style="align-items:start">
+          <div>
+            <div class="field"><label class="label" for="d1">Email</label><input class="input" id="d1" placeholder="you@example.com"></div>
+            <div class="field"><label class="label" for="d2">Marque</label><select class="select" id="d2"><option>Porsche</option><option>Ferrari</option></select></div>
+            <div class="field is-error"><label class="label" for="d3">Email</label><input class="input" id="d3" value="amara@" aria-invalid="true"><p class="err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.2"/></svg>Enter a valid email.</p></div>
+          </div>
+          <div>
+            <div class="field"><label class="label">Range</label><input class="range" type="range" value="60"></div>
+            <div class="field"><span class="label">View</span><div class="segment"><button aria-pressed="true">Grid</button><button aria-pressed="false">List</button></div></div>
+            <div class="field"><span class="label">Quantity</span><div class="stepper"><button aria-label="Decrease" disabled>−</button><output>1</output><button aria-label="Increase">+</button></div></div>
+          </div>
+          <div>
+            <label class="check"><input type="checkbox" checked><span>Include delivery quote</span></label>
+            <label class="check"><input type="checkbox"><span>Add trade-in valuation</span></label>
+            <div class="field" style="margin-top:var(--s4)"><label class="label" for="d4">Notes</label><textarea class="textarea" id="d4" placeholder="Anything we should know…"></textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ds__sec" id="badges">
+        <h2 class="h2">Badges &amp; chips</h2>
+        <div class="demo">
+          <div class="row" style="margin-bottom:var(--s5)">
+            <span class="badge badge--new">New</span>
+            <span class="badge badge--cpo">Certified</span>
+            <span class="badge badge--ltd">Limited</span>
+            <span class="badge badge--ev">Electric</span>
+            <span class="badge badge--gold">Featured</span>
+          </div>
+          <div class="row">
+            <button class="chip chip--gold" aria-pressed="true">Electric</button>
+            <button class="chip" aria-pressed="false">SUV</button>
+            <button class="chip" aria-pressed="false">Coupe</button>
+            <span class="active-chip">Ferrari<button aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="ds__sec" id="card">
+        <h2 class="h2">Vehicle card</h2>
+        <p class="muted">The workhorse component. Hover to reveal the performance triad; the heart saves, the checkbox compares.</p>
+        <div class="cols-3" id="dsCards"></div>
+      </section>
+
+      <section class="ds__sec" id="ribbon">
+        <h2 class="h2">Spec ribbon</h2>
+        <p class="muted">The signature element — key figures in tabular Manrope, each with a gold underline that draws in on scroll.</p>
+        <div id="dsRibbon"></div>
+      </section>
+
+      <section class="ds__sec" id="feedback">
+        <h2 class="h2">Feedback</h2>
+        <div class="demo">
+          <div class="row" style="margin-bottom:var(--s5)">
+            <button class="btn btn--line" id="dsToast">Fire a toast</button>
+            <button class="btn btn--line" data-open-saved>Open saved drawer</button>
+            <button class="btn btn--line" data-open-search>Open search</button>
+          </div>
+          <div class="grid g2">
+            <div class="alert alert--ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><div><p class="alert__t">Inspection passed</p><p>All 216 points cleared. Report attached to your order.</p></div></div>
+            <div class="alert alert--warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><div><p class="alert__t">Only one left</p><p>This configuration is the last in stock at this price.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ds__sec" id="states">
+        <h2 class="h2">States</h2>
+        <p class="muted">Every data surface renders all of these. The populated state is only ever one of five.</p>
+        <div class="cols-3">
+          <div class="demo"><p class="label">Loading</p><div class="skeleton" style="aspect-ratio:16/10;border-radius:10px"></div><div class="skeleton" style="height:12px;width:54%;margin-top:14px"></div><div class="skeleton" style="height:15px;width:80%;margin-top:9px"></div></div>
+          <div class="demo"><p class="label">Empty</p><div class="empty" style="border:0;padding:var(--s5) 0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><h3 class="h4">No matches</h3><p style="font-size:.86rem">Try widening your filters.</p></div></div>
+          <div class="demo"><p class="label">Progress</p><p class="num" style="font-weight:700;margin-bottom:10px">Inspection · 74%</p><div class="progress"><div class="progress__fill" style="width:74%"></div></div><p class="help">158 of 216 points cleared.</p></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__grid">
+      <div><a class="brand" href="index.html"><svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand__word">MERI<b>D</b>IAN</span></a><p class="foot__note">A global house for performance and luxury motorcars.</p></div>
+      <div><h5>Inventory</h5><ul><li><a href="inventory.html">All vehicles</a></li><li><a href="compare.html">Compare</a></li></ul></div>
+      <div><h5>Buying</h5><ul><li><a href="index.html#financing">Financing</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="index.html">About</a></li></ul></div>
+      <div><h5>Support</h5><ul><li><a href="index.html">Contact</a></li></ul></div>
+    </div>
+    <div class="foot__base"><span>© 2026 Meridian Motorcars.</span><span>Munich · Milan · London · Dubai</span></div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+  var M = window.MERIDIAN;
+  var TOKENS = [
+    ["Background","--bg"],["Surface","--surface"],["Surface 2","--surface-2"],["Surface 3","--surface-3"],
+    ["Ink","--ink"],["Ink 2","--ink-2"],["Ink 3","--ink-3"],["Line","--line"],
+    ["Gold","--gold"],["Gold soft","--gold-soft"],["Silver","--silver"],
+    ["Success","--ok"],["Warning","--warn"],["Error","--bad"],["Info","--info"]
+  ];
+  document.getElementById("swatches").innerHTML = TOKENS.map(function (t) {
+    return '<div class="sw"><div class="sw__c" style="background:var(' + t[1] + ')"></div><div class="sw__m"><p class="sw__n">' + t[0] + '</p><p class="sw__v">' + t[1] + '</p></div></div>';
+  }).join("");
+
+  var STEPS = [["s1",4],["s2",8],["s3",12],["s4",16],["s5",24],["s6",32],["s7",48],["s8",64],["s9",96],["s10",128]];
+  document.getElementById("spaceDemo").innerHTML = STEPS.map(function (s) {
+    return '<div class="space-row"><b>' + s[0] + ' · ' + s[1] + 'px</b><i style="width:' + s[1] + 'px"></i></div>';
+  }).join("");
+
+  document.getElementById("dsCards").innerHTML = ["p911","plaid","urus"].map(function (id) { return M.card(M.byId(id)); }).join("");
+
+  var v = M.byId("froma");
+  var rib = [[v.hp,"hp","Power"],[v.zero.toFixed(1),"s","0–100"],[v.torque,"Nm","Torque"],[v.top,"","Top km/h"],["V8","","Engine"]];
+  document.getElementById("dsRibbon").innerHTML = '<div class="ribbon">' + rib.map(function (r) {
+    return '<div class="ribbon__cell"><div class="ribbon__v num">' + r[0] + '<em>' + r[1] + '</em></div><div class="ribbon__k">' + r[2] + '</div></div>';
+  }).join("") + '</div>';
+
+  document.getElementById("dsToast").addEventListener("click", function () { window.MERIDIAN_TOAST("Vehicle reserved. A specialist will call within the hour.", "index.html"); });
+
+  window.MERIDIAN_SYNC();
+})();
+</script>
+</body>
+</html>

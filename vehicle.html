@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vehicle — Meridian</title>
+<meta name="description" content="Full specification, performance figures, financing and booking for this Meridian vehicle.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  .pdp-head { padding-top: calc(var(--nav-h) + var(--s6)); }
+  .pdp { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s7); align-items: start; padding-top: var(--s5); }
+
+  .gallery__stage { position: relative; border-radius: var(--r4); overflow: hidden; aspect-ratio: 16/10; background: var(--surface-2); border: 1px solid var(--line); }
+  .gallery__stage svg { width: 100%; height: 100%; transition: transform .8s var(--ease); }
+  .gallery__stage.is-zoom svg { transform: scale(1.5); cursor: zoom-out; }
+  .gallery__tools { position: absolute; top: 14px; right: 14px; z-index: 3; display: flex; gap: 8px; }
+  .gtool { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--glass); backdrop-filter: blur(8px); border: 1px solid var(--glass-line); color: var(--ink); }
+  .gtool svg { width: 18px; height: 18px; }
+  .gallery__badges { position: absolute; top: 14px; left: 14px; z-index: 3; display: flex; gap: 6px; }
+  .gallery__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s3); margin-top: var(--s3); }
+  .gthumb { border-radius: var(--r2); overflow: hidden; aspect-ratio: 16/10; border: 1px solid transparent; padding: 0; }
+  .gthumb[aria-pressed="true"] { border-color: var(--gold); }
+
+  .buy { position: sticky; top: calc(var(--nav-h) + var(--s4)); }
+  .buy__marque { font-family: var(--f-num); font-weight: 700; font-size: .74rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+  .buy__price { display: flex; align-items: baseline; gap: 12px; margin: var(--s4) 0; }
+  .buy__price .num { font-family: var(--f-num); font-weight: 800; font-size: 2.4rem; letter-spacing: -.03em; }
+  .buy__triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); margin: var(--s5) 0; }
+  .buy__triad div { padding: var(--s4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r2); text-align: center; }
+  .buy__triad b { font-family: var(--f-num); font-weight: 800; font-size: 1.3rem; display: block; }
+  .buy__triad span { font-family: var(--f-num); font-weight: 600; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .buy__cta { display: flex; gap: 10px; margin-top: var(--s5); }
+  .buy__save { width: 56px; flex: none; border: 1px solid var(--line-2); border-radius: var(--rp); display: grid; place-items: center; }
+  .buy__save svg { width: 20px; height: 20px; fill: none; stroke: var(--ink); stroke-width: 1.5; }
+  .buy__save[aria-pressed="true"] svg { fill: var(--gold); stroke: var(--gold); }
+  .buy__trust { display: grid; gap: 12px; margin-top: var(--s5); padding-top: var(--s5); border-top: 1px solid var(--line); }
+  .buy__trust div { display: flex; gap: 11px; align-items: center; font-size: .88rem; color: var(--ink-2); }
+  .buy__trust svg { width: 18px; height: 18px; color: var(--gold); flex: none; }
+
+  .spec-table { width: 100%; }
+  .spec-table tr { border-bottom: 1px solid var(--line); }
+  .spec-table td { padding: 14px 0; font-size: .92rem; }
+  .spec-table td:first-child { color: var(--ink-2); }
+  .spec-table td:last-child { text-align: right; font-family: var(--f-num); font-weight: 700; }
+
+  .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4); }
+  .feat { display: flex; gap: 12px; align-items: flex-start; }
+  .feat svg { width: 20px; height: 20px; color: var(--gold); flex: none; margin-top: 2px; }
+  @media (max-width: 600px) { .feat-grid { grid-template-columns: 1fr; } }
+
+  .fin-calc { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s7); align-items: center; }
+  .fin-out { display: flex; align-items: baseline; gap: 10px; }
+  .fin-out .num { font-family: var(--f-num); font-weight: 800; font-size: 2.8rem; letter-spacing: -.03em; }
+  @media (max-width: 820px) { .fin-calc { grid-template-columns: 1fr; gap: var(--s5); } }
+
+  .booking { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+  @media (max-width: 520px) { .booking { grid-template-columns: 1fr; } }
+
+  @media (max-width: 980px) { .pdp { grid-template-columns: 1fr; } .buy { position: static; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav__in">
+    <a class="brand" href="index.html" aria-label="Meridian home">
+      <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="brand__word">MERI<b>D</b>IAN</span>
+    </a>
+    <div class="nav__links">
+      <a href="inventory.html">Inventory</a>
+      <a href="inventory.html?fuel=Electric">Electric</a>
+      <a href="compare.html">Compare</a>
+      <a href="index.html#financing">Financing</a>
+      <a href="design-system.html">Design system</a>
+    </div>
+    <div class="nav__tools">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme">
+        <span class="theme-toggle__knob">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </span>
+      </button>
+      <button class="iconbtn" type="button" data-open-search aria-label="Search inventory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="iconbtn" type="button" data-open-saved aria-label="Saved vehicles">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <span class="dot-badge" data-saved-count hidden>0</span>
+      </button>
+      <button class="iconbtn nav__menu" type="button" aria-expanded="false" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="shell pdp-head">
+    <nav class="breadcrumb" aria-label="Breadcrumb" id="crumb"></nav>
+  </div>
+
+  <div class="shell pdp">
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="gallery__stage" id="stage">
+        <div class="gallery__badges" id="galBadges"></div>
+        <div class="gallery__tools">
+          <button class="gtool" type="button" id="zoomBtn" aria-label="Zoom image" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8.5v5M8.5 11h5"/></svg></button>
+          <button class="gtool" type="button" id="view360" aria-label="360 degree view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 1 2.6 6.1"/><path d="M3 14.5V19h4.5"/></svg></button>
+        </div>
+        <div id="stageImg"></div>
+      </div>
+      <div class="gallery__thumbs" id="thumbs" role="group" aria-label="Gallery views"></div>
+    </div>
+
+    <!-- BUY -->
+    <div class="buy">
+      <p class="buy__marque" id="bMarque"></p>
+      <h1 class="h2" id="bName" style="margin-top:6px"></h1>
+      <p class="muted" id="bMeta" style="margin-top:8px"></p>
+      <div class="buy__price"><span class="num" id="bPrice"></span><span class="badge badge--gold" id="bCond"></span></div>
+
+      <div class="buy__triad" id="bTriad"></div>
+
+      <div class="buy__cta">
+        <button class="btn btn--gold" style="flex:1" type="button" id="reserve">Reserve this vehicle</button>
+        <button class="buy__save" type="button" id="bSave" aria-pressed="false" aria-label="Save vehicle">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        </button>
+      </div>
+      <a class="btn btn--line btn--wide" href="#book" style="margin-top:10px">Book a test drive</a>
+
+      <div class="buy__trust">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span>216-point inspection passed · report included</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13l5 5v5h-3M3 7v10h2"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg><span>Insured worldwide delivery in 7–10 days</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>14-day return window, no questions asked</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC RIBBON -->
+  <section class="section--tight shell">
+    <div class="ribbon" id="ribbon"></div>
+  </section>
+
+  <!-- OVERVIEW + TABS -->
+  <section class="section--tight shell">
+    <div style="max-width:70ch"><p class="lead" id="bBlurb"></p></div>
+
+    <div style="margin-top:var(--s7)">
+      <div class="tabs" role="tablist" aria-label="Vehicle details">
+        <button class="tab" role="tab" id="tab-specs" aria-selected="true" aria-controls="panel-specs">Specifications</button>
+        <button class="tab" role="tab" id="tab-features" aria-selected="false" aria-controls="panel-features">Features</button>
+        <button class="tab" role="tab" id="tab-faq" aria-selected="false" aria-controls="panel-faq">FAQ</button>
+      </div>
+
+      <div class="tabpanel" id="panel-specs" role="tabpanel" aria-labelledby="tab-specs" style="padding-top:var(--s6)">
+        <div class="grid g2" style="align-items:start"><table class="spec-table" id="specA"></table><table class="spec-table" id="specB"></table></div>
+      </div>
+
+      <div class="tabpanel" id="panel-features" role="tabpanel" aria-labelledby="tab-features" hidden style="padding-top:var(--s6)">
+        <div class="feat-grid" id="featGrid"></div>
+      </div>
+
+      <div class="tabpanel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" hidden style="padding-top:var(--s6)">
+        <div id="faq" style="max-width:70ch"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCING -->
+  <section class="section band" id="finance">
+    <div class="shell">
+      <div class="sec-head"><div class="sec-head__t"><p class="eyebrow eyebrow--gold">Financing</p><h2 class="h2">Estimate your monthly</h2></div></div>
+      <div class="fin-calc">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s2)"><span class="label" style="margin:0">Estimated monthly</span><span class="badge badge--gold">6.9% APR representative</span></div>
+          <div class="fin-out"><span class="num" id="pdpMo">€0</span><span class="muted">/ month</span></div>
+          <p class="help" id="pdpSummary" style="margin-top:12px"></p>
+          <a class="btn btn--gold" href="#reserve" style="margin-top:var(--s5)" id="applyFin">Apply for this finance</a>
+        </div>
+        <div>
+          <div class="field">
+            <div style="display:flex;justify-content:space-between"><label class="label" for="pdpDep">Deposit</label><span class="num" id="pdpDepV" style="font-weight:700">15%</span></div>
+            <input class="range" type="range" id="pdpDep" min="0" max="50" step="1" value="15">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <div style="display:flex;justify-content:space-between"><label class="label" for="pdpTerm">Term</label><span class="num" id="pdpTermV" style="font-weight:700">48 months</span></div>
+            <input class="range" type="range" id="pdpTerm" min="12" max="72" step="12" value="48">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK TEST DRIVE -->
+  <section class="section shell" id="book">
+    <div class="sec-head"><div class="sec-head__t"><p class="eyebrow eyebrow--gold">Experience it</p><h2 class="h2">Book a test drive</h2></div></div>
+    <div class="grid g2" style="align-items:start">
+      <form id="bookForm" novalidate>
+        <div class="booking">
+          <div class="field"><label class="label" for="bkName">Full name</label><input class="input" id="bkName" autocomplete="name" required></div>
+          <div class="field"><label class="label" for="bkPhone">Phone</label><input class="input" id="bkPhone" type="tel" autocomplete="tel" required></div>
+        </div>
+        <div class="field is-error" id="bkEmailField">
+          <label class="label" for="bkEmail">Email</label>
+          <input class="input" id="bkEmail" type="email" autocomplete="email" aria-invalid="true" aria-describedby="bkEmailErr" required>
+          <p class="err" id="bkEmailErr" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.2"/></svg>Enter an email so we can confirm your slot.</p>
+        </div>
+        <div class="booking">
+          <div class="field"><label class="label" for="bkDate">Preferred date</label><input class="input" id="bkDate" type="date" required></div>
+          <div class="field"><label class="label" for="bkTime">Time</label>
+            <select class="select" id="bkTime"><option>09:00</option><option>11:00</option><option selected>14:00</option><option>16:00</option></select></div>
+        </div>
+        <button class="btn btn--gold btn--wide" type="submit" style="margin-top:var(--s3)">Request test drive</button>
+      </form>
+      <div class="alert alert--ok" id="bookInfo" style="align-self:start">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+        <div><p class="alert__t">No obligation, ever</p><p id="bookLoc">We'll confirm within one business hour and have the vehicle prepared. Home and hotel test drives available on request.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="section band">
+    <div class="shell">
+      <div class="sec-head"><div class="sec-head__t"><p class="eyebrow eyebrow--gold">You may also like</p><h2 class="h2">Comparable motorcars</h2></div>
+        <a class="link-arrow" href="inventory.html">All inventory <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></a>
+      </div>
+      <div class="grid g3" id="related"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand__word">MERI<b>D</b>IAN</span></a>
+        <p class="foot__note">A global house for performance and luxury motorcars. Inspected, certified, and delivered worldwide.</p>
+      </div>
+      <div><h5>Inventory</h5><ul><li><a href="inventory.html">All vehicles</a></li><li><a href="inventory.html?fuel=Electric">Electric</a></li><li><a href="compare.html">Compare</a></li></ul></div>
+      <div><h5>Buying</h5><ul><li><a href="index.html#financing">Financing</a></li><li><a href="inventory.html">Delivery</a></li><li><a href="inventory.html">Warranty</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="index.html">About</a></li><li><a href="index.html">Our houses</a></li></ul></div>
+      <div><h5>Support</h5><ul><li><a href="index.html">Contact</a></li><li><a href="design-system.html">Design system</a></li></ul></div>
+    </div>
+    <div class="foot__base"><span>© 2026 Meridian Motorcars. Vehicle names are trademarks of their respective manufacturers.</span><span>Munich · Milan · London · Dubai</span></div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+  var M = window.MERIDIAN;
+  var id = new URLSearchParams(location.search).get("id") || "p911";
+  var v = M.byId(id) || M.byId("p911");
+  document.title = v.marque + " " + v.name + " — Meridian";
+
+  document.getElementById("crumb").innerHTML =
+    '<a href="index.html">Home</a><span class="sep">/</span>' +
+    '<a href="inventory.html">Inventory</a><span class="sep">/</span>' +
+    '<a href="inventory.html?body=' + v.body + '">' + v.body + '</a><span class="sep">/</span><span>' + M.esc(v.name) + '</span>';
+
+  /* gallery: 4 deterministic angles of the same scene */
+  var views = [
+    M.scene(v, { decorative: true }),
+    M.scene(v, { decorative: true, ratio: "wide" }),
+    M.scene(v, { decorative: true, dim: true }),
+    M.scene(v, { decorative: true })
+  ];
+  var labels = ["Exterior", "Profile", "Low light", "Detail"];
+  document.getElementById("stageImg").innerHTML = views[0];
+  document.getElementById("galBadges").innerHTML = M.badgeHTML(v);
+  document.getElementById("thumbs").innerHTML = views.map(function (s, i) {
+    return '<button class="gthumb plate" type="button" data-v="' + i + '" aria-pressed="' + (i === 0) + '" aria-label="' + labels[i] + '">' + s + '</button>';
+  }).join("");
+  document.getElementById("thumbs").addEventListener("click", function (e) {
+    var b = e.target.closest(".gthumb"); if (!b) return;
+    document.getElementById("stageImg").innerHTML = views[+b.dataset.v];
+    [].forEach.call(this.children, function (c) { c.setAttribute("aria-pressed", String(c === b)); });
+  });
+  var stage = document.getElementById("stage");
+  document.getElementById("zoomBtn").addEventListener("click", function () {
+    var on = stage.classList.toggle("is-zoom"); this.setAttribute("aria-pressed", String(on));
+  });
+  document.getElementById("view360").addEventListener("click", function () { window.MERIDIAN_TOAST("360° viewer opens in the full experience."); });
+
+  /* buy column */
+  document.getElementById("bMarque").textContent = v.marque + " · " + v.year;
+  document.getElementById("bName").textContent = v.name;
+  document.getElementById("bMeta").textContent = v.body + " · " + v.drive + " · " + (v.mileage ? v.mileage.toLocaleString("en-GB") + " km" : "Delivery mileage") + " · " + v.city;
+  document.getElementById("bPrice").textContent = M.eur(v.price);
+  document.getElementById("bCond").textContent = v.cond === "New" ? "New" : "Certified";
+
+  var triad = v.fuel === "Electric"
+    ? [[v.hp, "Horsepower"], [v.zero.toFixed(1) + "s", "0–100 km/h"], [v.range + " km", "Range"]]
+    : [[v.hp, "Horsepower"], [v.zero.toFixed(1) + "s", "0–100 km/h"], [v.top, "Top km/h"]];
+  document.getElementById("bTriad").innerHTML = triad.map(function (t) { return '<div><b class="num">' + t[0] + '</b><span>' + t[1] + '</span></div>'; }).join("");
+
+  document.getElementById("bBlurb").textContent = v.blurb;
+
+  /* save */
+  var bSave = document.getElementById("bSave");
+  if (window.MERIDIAN_SAVED.has(v.id)) bSave.setAttribute("aria-pressed", "true");
+  bSave.setAttribute("data-save", v.id);
+  document.getElementById("reserve").addEventListener("click", function () { window.MERIDIAN_TOAST(v.name + " reserved. A specialist will call within the hour.", "index.html"); });
+
+  /* spec ribbon */
+  var ribbon = v.fuel === "Electric"
+    ? [[v.hp, "hp", "Power"], [v.zero.toFixed(1), "s", "0–100"], [v.torque, "Nm", "Torque"], [v.range, "km", "Range"], [v.top, "", "Top km/h"]]
+    : [[v.hp, "hp", "Power"], [v.zero.toFixed(1), "s", "0–100"], [v.torque, "Nm", "Torque"], [v.top, "", "Top km/h"], [v.gearbox.split(" ")[0], "", "Gearbox"]];
+  document.getElementById("ribbon").innerHTML = ribbon.map(function (r) {
+    return '<div class="ribbon__cell"><div class="ribbon__v num">' + r[0] + '<em>' + r[1] + '</em></div><div class="ribbon__k">' + r[2] + '</div></div>';
+  }).join("");
+
+  /* spec tables */
+  var specsA = [
+    ["Marque", v.marque], ["Model", v.name], ["Year", v.year], ["Body", v.body],
+    ["Condition", v.cond], ["Mileage", v.mileage ? v.mileage.toLocaleString("en-GB") + " km" : "Delivery only"], ["Location", v.city]
+  ];
+  var specsB = [
+    ["Power", v.hp + " hp"], ["Torque", v.torque + " Nm"], ["0–100 km/h", v.zero.toFixed(1) + " s"],
+    ["Top speed", v.top + " km/h"], ["Gearbox", v.gearbox], ["Drivetrain", v.drive],
+    v.fuel === "Electric" ? ["Range", v.range + " km"] : ["Fuel", v.fuel], ["Seats", v.seats]
+  ];
+  function fillSpec(el, rows) { document.getElementById(el).innerHTML = rows.map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + M.esc(String(r[1])) + '</td></tr>'; }).join(""); }
+  fillSpec("specA", specsA); fillSpec("specB", specsB);
+
+  /* features */
+  var FEATURES = ["Adaptive matrix LED headlamps", "Carbon-ceramic braking", "Heated ventilated sport seats",
+    "Bang & Olufsen sound", "Adaptive air suspension", "Head-up display", "360° camera & park assist",
+    "Wireless CarPlay & Android Auto", "Soft-close doors", "Configurable drive modes",
+    "Lane-keep & adaptive cruise", "Premium hide upholstery"];
+  document.getElementById("featGrid").innerHTML = FEATURES.map(function (f) {
+    return '<div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg><span>' + f + '</span></div>';
+  }).join("");
+
+  /* faq */
+  var FAQ = [
+    ["Is the inspection report included?", "Yes. Every Meridian vehicle passes an independent 216-point inspection, and the full report — including any cosmetic notes and service history — is shared before you commit and travels with the car."],
+    ["Can I buy from another country?", "Absolutely. Around 60% of our sales cross a border. We handle enclosed, insured transport and all export paperwork from any of our four houses to your door."],
+    ["What warranty comes with the car?", "New vehicles carry the manufacturer's balance; certified vehicles include a 12-month Meridian mechanical warranty, extendable to 36. Details are listed on your order summary."],
+    ["Can I trade in my current car?", "Yes. Enter your registration during checkout for an instant indicative valuation, and we'll finalise it against the inspection when your new car is delivered."]
+  ];
+  document.getElementById("faq").innerHTML = FAQ.map(function (q, i) {
+    return '<div class="acc__item"><button class="acc__btn" type="button" aria-expanded="' + (i === 0) + '" aria-controls="fq' + i + '">' + M.esc(q[0]) +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>' +
+      '<div class="acc__panel" id="fq' + i + '"' + (i === 0 ? "" : " hidden") + '><p>' + M.esc(q[1]) + '</p></div></div>';
+  }).join("");
+
+  /* tabs */
+  var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () {
+      tabs.forEach(function (x) {
+        var sel = x === t;
+        x.setAttribute("aria-selected", String(sel));
+        document.getElementById(x.getAttribute("aria-controls")).hidden = !sel;
+      });
+    });
+    t.addEventListener("keydown", function (e) {
+      var i = tabs.indexOf(t);
+      if (e.key === "ArrowRight") { e.preventDefault(); tabs[(i + 1) % tabs.length].focus(); tabs[(i + 1) % tabs.length].click(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); tabs[(i - 1 + tabs.length) % tabs.length].focus(); tabs[(i - 1 + tabs.length) % tabs.length].click(); }
+    });
+  });
+
+  /* financing */
+  var dep = document.getElementById("pdpDep"), term = document.getElementById("pdpTerm");
+  function calc() {
+    var principal = v.price * (1 - (+dep.value) / 100);
+    var mo = M.monthly(principal, 6.9, +term.value);
+    document.getElementById("pdpMo").textContent = M.eur(Math.round(mo));
+    document.getElementById("pdpDepV").textContent = dep.value + "%";
+    document.getElementById("pdpTermV").textContent = term.value + " months";
+    document.getElementById("pdpSummary").textContent = "On " + M.eur(v.price) + " over " + term.value + " months with " + dep.value + "% (" + M.eur(Math.round(v.price * dep.value / 100)) + ") deposit.";
+  }
+  dep.addEventListener("input", calc); term.addEventListener("input", calc); calc();
+  document.getElementById("applyFin").addEventListener("click", function (e) { e.preventDefault(); window.MERIDIAN_TOAST("Finance application started — takes about two minutes."); });
+
+  /* booking */
+  document.getElementById("bookLoc").textContent = "We'll confirm within one business hour at our " + v.city + " house, and have the " + v.name + " prepared. Home and hotel test drives available on request.";
+  var bkEmail = document.getElementById("bkEmail"), bkField = document.getElementById("bkEmailField");
+  function validEmail() {
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(bkEmail.value.trim());
+    bkField.classList.toggle("is-error", !ok); bkEmail.setAttribute("aria-invalid", String(!ok));
+    document.getElementById("bkEmailErr").style.display = ok ? "none" : "";
+    return ok;
+  }
+  bkEmail.addEventListener("blur", validEmail);
+  bkEmail.addEventListener("input", function () { if (bkField.classList.contains("is-error")) validEmail(); });
+  document.getElementById("bookForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!validEmail()) { bkEmail.focus(); return; }
+    var name = document.getElementById("bkName").value.trim() || "there";
+    window.MERIDIAN_TOAST("Test drive requested — we'll confirm shortly, " + name.split(" ")[0] + ".");
+    this.reset(); bkField.classList.remove("is-error"); document.getElementById("bkEmailErr").style.display = "none";
+  });
+
+  /* related */
+  var related = M.VEHICLES.filter(function (x) { return x.id !== v.id && (x.body === v.body || x.fuel === v.fuel); })
+    .sort(function (a, b) { return Math.abs(a.price - v.price) - Math.abs(b.price - v.price); }).slice(0, 3);
+  if (related.length < 3) related = M.VEHICLES.filter(function (x) { return x.id !== v.id; }).slice(0, 3);
+  document.getElementById("related").innerHTML = related.map(function (x) { return M.card(x); }).join("");
+
+  window.MERIDIAN_SYNC();
+})();
+</script>
+</body>
+</html>

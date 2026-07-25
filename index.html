@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian — The World's Finest Motorcars, Curated</title>
+<meta name="description" content="Meridian is a global house of performance and luxury motorcars. Porsche, Ferrari, Lamborghini and more — every vehicle inspected, certified, and delivered worldwide from Munich, Milan, London and Dubai.">
+<meta property="og:title" content="Meridian — The World's Finest Motorcars, Curated">
+<meta property="og:description" content="A global house of performance and luxury motorcars, delivered worldwide.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"AutoDealer","name":"Meridian","description":"A global house of performance and luxury motorcars.","url":"https://meridian.example","areaServed":["DE","IT","GB","AE"],"priceRange":"€€€€"}
+</script>
+<style>
+  /* hero */
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; padding-bottom: clamp(var(--s7), 7vh, var(--s9)); }
+  .hero__scene { position: absolute; inset: 0; z-index: 0; }
+  .hero__scene svg { width: 100%; height: 100%; }
+  .hero__scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, var(--bg) 8%, transparent 52%), linear-gradient(0deg, var(--bg) 4%, transparent 40%); }
+  .hero__in { position: relative; z-index: 2; width: var(--shell); margin-inline: auto; }
+  .hero h1 { max-width: 16ch; margin: var(--s5) 0 var(--s5); }
+  .hero .lead { max-width: 46ch; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s6); }
+  .hero__meta { position: absolute; right: 0; bottom: 0; text-align: right; z-index: 2; }
+  .hero__meta .num { font-family: var(--f-num); font-weight: 800; font-size: 2.4rem; letter-spacing: -.03em; line-height: 1; }
+  .hero__meta span { font-family: var(--f-num); font-weight: 600; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+  @media (max-width: 820px) { .hero__meta { display: none; } }
+
+  /* quick search bar */
+  .qsearch { position: relative; z-index: 3; width: var(--shell); margin: -34px auto 0; }
+  .qsearch__card { background: var(--glass); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border: 1px solid var(--glass-line); border-radius: var(--r4); box-shadow: var(--shadow-2); padding: var(--s4); display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: var(--s3); align-items: end; }
+  .qsearch .field { margin: 0; }
+  @media (max-width: 900px) { .qsearch__card { grid-template-columns: 1fr 1fr; } .qsearch__go { grid-column: 1 / -1; } }
+  @media (max-width: 520px) { .qsearch__card { grid-template-columns: 1fr; } }
+
+  /* marque strip */
+  .marques { display: flex; flex-wrap: wrap; gap: var(--s5) var(--s8); align-items: center; justify-content: center; }
+  .marques span { font-family: var(--f-display); font-weight: 500; font-size: 1.15rem; letter-spacing: .12em; color: var(--ink-3); transition: color .3s var(--ease); text-transform: uppercase; }
+  .marques span:hover { color: var(--ink); }
+
+  /* categories */
+  .cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4); }
+  .cat { position: relative; border-radius: var(--r3); overflow: hidden; aspect-ratio: 3/4; display: flex; align-items: flex-end; color: #fff; border: 1px solid var(--line); }
+  .cat svg { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform .9s var(--ease); }
+  .cat:hover svg { transform: scale(1.06); }
+  .cat::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(0,0,0,.82)); }
+  .cat__in { position: relative; z-index: 2; padding: var(--s5); width: 100%; }
+  .cat__n { font-family: var(--f-display); font-weight: 600; font-size: 1.4rem; }
+  .cat__c { font-family: var(--f-num); font-weight: 600; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-top: 4px; }
+  .cat__arrow { position: absolute; top: var(--s5); right: var(--s5); z-index: 2; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); display: grid; place-items: center; transition: background .3s var(--ease), color .3s var(--ease); }
+  .cat:hover .cat__arrow { background: #fff; color: #0A0A0A; }
+  @media (max-width: 900px) { .cats { grid-template-columns: 1fr 1fr; } }
+
+  /* value props */
+  .vprops { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s5); }
+  .vprop { padding: var(--s6); border: 1px solid var(--line); border-radius: var(--r3); background: var(--surface); }
+  .vprop__ic { width: 48px; height: 48px; border-radius: var(--r2); background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--gold); display: grid; place-items: center; margin-bottom: var(--s4); }
+  .vprop__ic svg { width: 24px; height: 24px; stroke-width: 1.5; }
+  .vprop h3 { font-size: 1.2rem; margin-bottom: 10px; }
+  .vprop p { color: var(--ink-2); font-size: .92rem; line-height: 1.6; }
+  @media (max-width: 860px) { .vprops { grid-template-columns: 1fr; } }
+
+  /* stats band */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s5); }
+  @media (max-width: 720px) { .stats { grid-template-columns: 1fr 1fr; gap: var(--s7) var(--s5); } }
+
+  /* financing */
+  .fin { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); align-items: center; }
+  .fin__calc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r4); padding: var(--s6); }
+  .fin__out { display: flex; align-items: baseline; gap: 10px; margin: var(--s4) 0 var(--s2); }
+  .fin__mo { font-family: var(--f-num); font-weight: 800; font-size: 3rem; letter-spacing: -.03em; }
+  @media (max-width: 900px) { .fin { grid-template-columns: 1fr; gap: var(--s6); } }
+
+  /* ev feature */
+  .ev { position: relative; border-radius: var(--r5); overflow: hidden; border: 1px solid var(--line); min-height: 460px; display: flex; align-items: center; }
+  .ev__scene { position: absolute; inset: 0; }
+  .ev__scene svg { width: 100%; height: 100%; }
+  .ev__scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, var(--bg) 12%, transparent 60%); }
+  .ev__in { position: relative; z-index: 2; padding: clamp(var(--s6), 6vw, var(--s9)); max-width: 60ch; }
+
+  /* testimonials */
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s5); }
+  .quote { padding: var(--s6); border: 1px solid var(--line); border-radius: var(--r3); background: var(--surface); display: flex; flex-direction: column; }
+  .quote__stars { display: flex; gap: 2px; margin-bottom: var(--s4); }
+  .quote__stars svg { width: 16px; height: 16px; fill: var(--gold); }
+  .quote p { font-size: 1.02rem; line-height: 1.6; flex: 1; }
+  .quote__who { display: flex; align-items: center; gap: 12px; margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--line); }
+  .quote__av { width: 42px; height: 42px; border-radius: 50%; background: var(--surface-3); display: grid; place-items: center; font-family: var(--f-num); font-weight: 800; font-size: .8rem; color: var(--gold); }
+  @media (max-width: 860px) { .quotes { grid-template-columns: 1fr; } }
+
+  /* locations */
+  .locs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4); }
+  .loc { padding: var(--s5); border: 1px solid var(--line); border-radius: var(--r3); background: var(--surface); transition: border-color .3s var(--ease); }
+  .loc:hover { border-color: var(--gold); }
+  .loc h4 { font-size: 1.25rem; }
+  .loc p { color: var(--ink-2); font-size: .86rem; margin-top: 6px; }
+  .loc__count { font-family: var(--f-num); font-weight: 800; color: var(--gold); font-size: .8rem; margin-top: var(--s3); display: block; }
+  @media (max-width: 820px) { .locs { grid-template-columns: 1fr 1fr; } }
+
+  /* newsletter */
+  .news { text-align: center; max-width: 60ch; margin-inline: auto; }
+  .news__form { display: flex; gap: var(--s3); margin-top: var(--s6); }
+  .news__form .input { height: 56px; }
+  @media (max-width: 520px) { .news__form { flex-direction: column; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- NAV -->
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav__in">
+    <a class="brand" href="index.html" aria-label="Meridian home">
+      <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linjoin="round" stroke-linecap="round"/></svg>
+      <span class="brand__word">MERI<b>D</b>IAN</span>
+    </a>
+    <div class="nav__links">
+      <a href="inventory.html">Inventory</a>
+      <a href="inventory.html?fuel=Electric">Electric</a>
+      <a href="compare.html">Compare</a>
+      <a href="index.html#financing">Financing</a>
+      <a href="design-system.html">Design system</a>
+    </div>
+    <div class="nav__tools">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme">
+        <span class="theme-toggle__knob">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </span>
+      </button>
+      <button class="iconbtn" type="button" data-open-search aria-label="Search inventory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="iconbtn" type="button" data-open-saved aria-label="Saved vehicles">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <span class="dot-badge" data-saved-count hidden>0</span>
+      </button>
+      <a class="btn btn--gold btn--sm" href="inventory.html" style="margin-left:6px">Browse</a>
+      <button class="iconbtn nav__menu" type="button" aria-expanded="false" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__scene" id="heroScene" aria-hidden="true"></div>
+    <div class="hero__in">
+      <p class="eyebrow eyebrow--gold">Munich · Milan · London · Dubai</p>
+      <h1 class="display">The world's finest motorcars, <span class="gold-text">curated.</span></h1>
+      <p class="lead">Meridian is a global house for performance and luxury. Every vehicle is independently inspected, road-verified, and delivered to your door — with a marque expert on the line before you ever sign.</p>
+      <div class="hero__cta">
+        <a class="btn btn--gold btn--lg" href="inventory.html">Explore inventory
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></a>
+        <a class="btn btn--line btn--lg" href="index.html#financing">Calculate finance</a>
+      </div>
+      <div class="hero__meta">
+        <div class="num" data-count="240" data-suffix="+">240+</div>
+        <span>Motorcars in stock</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK SEARCH -->
+  <div class="qsearch">
+    <form class="qsearch__card" id="qsearch" aria-label="Quick vehicle search">
+      <div class="field"><label class="label" for="qMarque">Marque</label>
+        <select class="select" id="qMarque"><option value="">Any marque</option></select></div>
+      <div class="field"><label class="label" for="qBody">Body</label>
+        <select class="select" id="qBody"><option value="">Any body</option></select></div>
+      <div class="field"><label class="label" for="qFuel">Fuel</label>
+        <select class="select" id="qFuel"><option value="">Any fuel</option></select></div>
+      <div class="field"><label class="label" for="qBudget">Budget up to</label>
+        <select class="select" id="qBudget">
+          <option value="">No maximum</option>
+          <option value="130000">€130,000</option>
+          <option value="200000">€200,000</option>
+          <option value="300000">€300,000</option>
+        </select></div>
+      <button class="btn btn--gold qsearch__go" type="submit" style="height:50px">Search</button>
+    </form>
+  </div>
+
+  <!-- MARQUES -->
+  <section class="section--tight shell" aria-label="Marques we carry">
+    <p class="eyebrow" style="justify-content:center;margin-bottom:var(--s5);width:100%">Fourteen marques, one standard</p>
+    <div class="marques" id="marques"></div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="section band">
+    <div class="shell">
+      <div class="sec-head">
+        <div class="sec-head__t">
+          <p class="eyebrow eyebrow--gold">Featured this week</p>
+          <h2 class="h1">Hand-picked by our specialists</h2>
+        </div>
+        <a class="link-arrow" href="inventory.html">View all inventory
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></a>
+      </div>
+      <div class="grid g3" id="featured"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section shell">
+    <div class="sec-head">
+      <div class="sec-head__t">
+        <p class="eyebrow eyebrow--gold">By body style</p>
+        <h2 class="h1">Find your shape</h2>
+      </div>
+    </div>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <!-- WHY MERIDIAN -->
+  <section class="section band">
+    <div class="shell">
+      <div class="sec-head">
+        <div class="sec-head__t">
+          <p class="eyebrow eyebrow--gold">Why Meridian</p>
+          <h2 class="h1">Buying a car this good should feel effortless</h2>
+        </div>
+      </div>
+      <div class="vprops">
+        <div class="vprop reveal">
+          <div class="vprop__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>216-point inspection</h3>
+          <p>Every car passes an independent mechanical and cosmetic inspection before it reaches your screen. The full report ships with the vehicle — no surprises, no asterisks.</p>
+        </div>
+        <div class="vprop reveal">
+          <div class="vprop__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13l5 5v5h-3M3 7v10h2m0 0a2.5 2.5 0 1 0 5 0m-5 0a2.5 2.5 0 1 1 5 0m6 0a2.5 2.5 0 1 0 5 0m-5 0a2.5 2.5 0 1 1 5 0"/></svg></div>
+          <h3>Delivered worldwide</h3>
+          <p>Enclosed transport from any of our four houses to your driveway, fully insured and tracked. Most European deliveries complete inside seven days.</p>
+        </div>
+        <div class="vprop reveal">
+          <div class="vprop__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h3>Financing in minutes</h3>
+          <p>Bespoke finance and lease structures from partners who understand these cars. Soft-quote in two minutes; it won't touch your credit score.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section band-ink">
+    <div class="shell">
+      <div class="stats">
+        <div class="reveal"><div class="stat__v num"><span data-count="12800" data-suffix="+">12,800+</span></div><div class="stat__k">Cars delivered</div></div>
+        <div class="reveal"><div class="stat__v num"><span data-count="4">4</span></div><div class="stat__k">Global houses</div></div>
+        <div class="reveal"><div class="stat__v num"><span data-count="98.6" data-suffix="%">98.6%</span></div><div class="stat__k">Would buy again</div></div>
+        <div class="reveal"><div class="stat__v num"><span data-count="216">216</span></div><div class="stat__k">Inspection points</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCING -->
+  <section class="section shell" id="financing">
+    <div class="fin">
+      <div>
+        <p class="eyebrow eyebrow--gold">Financing</p>
+        <h2 class="h1" style="margin:var(--s4) 0 var(--s5)">Own it your way</h2>
+        <p class="lead">Move the sliders to see a real monthly figure. When you find a car you love, the same calculator is built into its page — pre-filled and ready to apply.</p>
+        <ul style="margin-top:var(--s6);display:grid;gap:var(--s4)">
+          <li style="display:flex;gap:12px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg><span class="muted">Soft-quote won't affect your credit score</span></li>
+          <li style="display:flex;gap:12px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg><span class="muted">Fixed and balloon structures available</span></li>
+          <li style="display:flex;gap:12px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg><span class="muted">Settle or upgrade early with no penalty</span></li>
+        </ul>
+      </div>
+      <div class="fin__calc">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span class="label" style="margin:0">Estimated monthly</span>
+          <span class="badge badge--gold">Representative 6.9% APR</span>
+        </div>
+        <div class="fin__out"><span class="fin__mo num" id="finMo">€1,940</span><span class="muted">/ month</span></div>
+        <p class="help" id="finSummary">On €168,400 over 48 months with 15% deposit.</p>
+
+        <div class="field" style="margin-top:var(--s5)">
+          <div style="display:flex;justify-content:space-between"><label class="label" for="finPrice">Vehicle price</label><span class="num" id="finPriceV" style="font-weight:700">€168,400</span></div>
+          <input class="range" type="range" id="finPrice" min="80000" max="420000" step="1000" value="168400">
+        </div>
+        <div class="field">
+          <div style="display:flex;justify-content:space-between"><label class="label" for="finDep">Deposit</label><span class="num" id="finDepV" style="font-weight:700">15%</span></div>
+          <input class="range" type="range" id="finDep" min="0" max="50" step="1" value="15">
+        </div>
+        <div class="field" style="margin-bottom:var(--s5)">
+          <div style="display:flex;justify-content:space-between"><label class="label" for="finTerm">Term</label><span class="num" id="finTermV" style="font-weight:700">48 months</span></div>
+          <input class="range" type="range" id="finTerm" min="12" max="72" step="12" value="48">
+        </div>
+        <a class="btn btn--gold btn--wide" href="inventory.html">Find a car in this range</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ELECTRIC -->
+  <section class="section shell">
+    <div class="ev">
+      <div class="ev__scene" id="evScene" aria-hidden="true"></div>
+      <div class="ev__in">
+        <p class="eyebrow eyebrow--gold">The electric collection</p>
+        <h2 class="h1" style="margin:var(--s4) 0 var(--s5)">Silence has never been this fast</h2>
+        <p class="lead">From the 1,020-horsepower Model S Plaid to the first electric Rolls-Royce, our EV collection pairs instant torque with the range to use it. Every listing shows real-world range and 10–80% charge times.</p>
+        <a class="btn btn--gold btn--lg" style="margin-top:var(--s6)" href="inventory.html?fuel=Electric">Explore electric
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section band">
+    <div class="shell">
+      <div class="sec-head">
+        <div class="sec-head__t">
+          <p class="eyebrow eyebrow--gold">From the owners</p>
+          <h2 class="h1">Trusted with the cars they've dreamt of</h2>
+        </div>
+      </div>
+      <div class="quotes">
+        <figure class="quote reveal">
+          <div class="quote__stars" aria-label="5 out of 5">%STARS%</div>
+          <blockquote><p>"The 911 arrived exactly as described, down to the inspection notes on a single stone chip. The specialist knew the car better than I did. This is how it should be done."</p></blockquote>
+          <figcaption class="quote__who"><span class="quote__av">JM</span><span><b style="font-family:var(--f-display)">Julian Mertens</b><span class="faint" style="display:block;font-size:.8rem">Zurich · Porsche 911 GTS</span></span></figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <div class="quote__stars" aria-label="5 out of 5">%STARS%</div>
+          <blockquote><p>"I bought a Taycan from London and had it in Dubai in nine days, fully sorted. The finance quote took two minutes and beat my bank. Effortless is the only word."</p></blockquote>
+          <figcaption class="quote__who"><span class="quote__av">AA</span><span><b style="font-family:var(--f-display)">Amira Al-Fahim</b><span class="faint" style="display:block;font-size:.8rem">Dubai · Porsche Taycan Turbo S</span></span></figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <div class="quote__stars" aria-label="5 out of 5">%STARS%</div>
+          <blockquote><p>"Comparing three GT cars side by side on their site made the decision obvious. The DB12 won. Six months in, it's still the best purchase I've made in a decade."</p></blockquote>
+          <figcaption class="quote__who"><span class="quote__av">RK</span><span><b style="font-family:var(--f-display)">Rafael Costa</b><span class="faint" style="display:block;font-size:.8rem">Lisbon · Aston Martin DB12</span></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section class="section shell">
+    <div class="sec-head">
+      <div class="sec-head__t">
+        <p class="eyebrow eyebrow--gold">Our houses</p>
+        <h2 class="h1">Visit us, or we'll come to you</h2>
+      </div>
+      <a class="link-arrow" href="inventory.html">Book a private viewing
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></a>
+    </div>
+    <div class="locs">
+      <div class="loc reveal"><h4>Munich</h4><p>Maximilianstraße 12<br>Open Mon–Sat, 9–19</p><span class="loc__count num" id="loc-Munich"></span></div>
+      <div class="loc reveal"><h4>Milan</h4><p>Via Monte Napoleone 8<br>Open Mon–Sat, 9–19</p><span class="loc__count num" id="loc-Milan"></span></div>
+      <div class="loc reveal"><h4>London</h4><p>Berkeley Square W1J<br>Open Mon–Sat, 9–18</p><span class="loc__count num" id="loc-London"></span></div>
+      <div class="loc reveal"><h4>Dubai</h4><p>DIFC Gate Avenue<br>Open Sat–Thu, 10–20</p><span class="loc__count num" id="loc-Dubai"></span></div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="section band-ink">
+    <div class="shell news">
+      <p class="eyebrow eyebrow--gold" style="justify-content:center">The Meridian Register</p>
+      <h2 class="h1" style="margin:var(--s4) 0 var(--s4)">First to know, first to drive</h2>
+      <p class="lead" style="margin-inline:auto">New arrivals, rare consignments, and invitations to private viewings — sent when there's something worth your attention, never more than twice a month.</p>
+      <form class="news__form" id="newsForm" novalidate>
+        <label class="vh" for="newsEmail">Email address</label>
+        <input class="input" id="newsEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <button class="btn btn--gold" type="submit" style="flex:none">Join the register</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand__word">MERI<b>D</b>IAN</span></a>
+        <p class="foot__note">A global house for performance and luxury motorcars. Inspected, certified, and delivered worldwide.</p>
+        <div class="social">
+          <a href="index.html" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="index.html" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg></a>
+          <a href="index.html" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg></a>
+        </div>
+      </div>
+      <div><h5>Inventory</h5><ul>
+        <li><a href="inventory.html">All vehicles</a></li>
+        <li><a href="inventory.html?fuel=Electric">Electric</a></li>
+        <li><a href="inventory.html?body=SUV">SUVs</a></li>
+        <li><a href="inventory.html?body=Coupe">Coupes</a></li>
+        <li><a href="compare.html">Compare</a></li>
+      </ul></div>
+      <div><h5>Buying</h5><ul>
+        <li><a href="index.html#financing">Financing</a></li>
+        <li><a href="inventory.html">Trade-in</a></li>
+        <li><a href="inventory.html">Delivery</a></li>
+        <li><a href="inventory.html">Warranty</a></li>
+      </ul></div>
+      <div><h5>Company</h5><ul>
+        <li><a href="index.html">About</a></li>
+        <li><a href="index.html">Our houses</a></li>
+        <li><a href="index.html">Careers</a></li>
+        <li><a href="index.html">Press</a></li>
+      </ul></div>
+      <div><h5>Support</h5><ul>
+        <li><a href="index.html">Contact</a></li>
+        <li><a href="index.html">FAQ</a></li>
+        <li><a href="design-system.html">Design system</a></li>
+        <li><a href="index.html">Privacy</a></li>
+      </ul></div>
+    </div>
+    <div class="foot__base">
+      <span>© 2026 Meridian Motorcars. Vehicle names are trademarks of their respective manufacturers.</span>
+      <span>Munich · Milan · London · Dubai</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+  var M = window.MERIDIAN;
+  var star = '<svg viewBox="0 0 24 24"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 19l-5.8 3 1.1-6.5L2.6 9.4l6.5-.9z"/></svg>';
+  document.body.innerHTML = document.body.innerHTML.replace(/%STARS%/g, star.repeat(5));
+
+  /* hero + ev scenes */
+  document.getElementById("heroScene").innerHTML = M.scene(M.byId("froma"), { decorative: true, ratio: "tall" });
+  document.getElementById("evScene").innerHTML = M.scene(M.byId("spectre"), { decorative: true, dim: true });
+
+  /* marque strip */
+  document.getElementById("marques").innerHTML = M.MARQUES.map(function (m) { return "<span>" + M.esc(m) + "</span>"; }).join("");
+
+  /* featured cards */
+  var feat = ["p911","froma","db12","plaid","urus","spectre"];
+  document.getElementById("featured").innerHTML = feat.map(function (id) { return M.card(M.byId(id), { reveal: true }); }).join("");
+
+  /* categories */
+  var cats = [
+    { body: "Coupe", rep: "hura" }, { body: "Sedan", rep: "plaid" },
+    { body: "SUV", rep: "urus" }, { body: "GT", rep: "bentley" }
+  ];
+  document.getElementById("cats").innerHTML = cats.map(function (c) {
+    var n = M.VEHICLES.filter(function (v) { return v.body === c.body; }).length;
+    return '<a class="cat reveal" href="inventory.html?body=' + c.body + '">' +
+      M.scene(M.byId(c.rep), { decorative: true, ratio: "tall" }) +
+      '<span class="cat__arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h15m-6-7 7 7-7 7"/></svg></span>' +
+      '<span class="cat__in"><span class="cat__n">' + c.body + '</span><span class="cat__c">' + n + ' available</span></span></a>';
+  }).join("");
+
+  /* location counts */
+  M.CITIES.forEach(function (c) {
+    var n = M.VEHICLES.filter(function (v) { return v.city === c; }).length;
+    var el = document.getElementById("loc-" + c); if (el) el.textContent = n + " in stock";
+  });
+
+  /* quick search selects */
+  function opts(el, list) { document.getElementById(el).insertAdjacentHTML("beforeend", list.map(function (x) { return '<option value="' + x + '">' + x + '</option>'; }).join("")); }
+  opts("qMarque", M.MARQUES); opts("qBody", M.BODIES); opts("qFuel", M.FUELS);
+  document.getElementById("qsearch").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var p = new URLSearchParams();
+    ["Marque", "Body", "Fuel"].forEach(function (k) { var v = document.getElementById("q" + k).value; if (v) p.set(k.toLowerCase(), v); });
+    var b = document.getElementById("qBudget").value; if (b) p.set("max", b);
+    location.href = "inventory.html?" + p.toString();
+  });
+
+  /* financing calculator */
+  var fp = document.getElementById("finPrice"), fd = document.getElementById("finDep"), ft = document.getElementById("finTerm");
+  function calc() {
+    var price = +fp.value, dep = +fd.value, term = +ft.value;
+    var principal = price * (1 - dep / 100);
+    var mo = M.monthly(principal, 6.9, term);
+    document.getElementById("finMo").textContent = M.eur(Math.round(mo));
+    document.getElementById("finPriceV").textContent = M.eur(price);
+    document.getElementById("finDepV").textContent = dep + "%";
+    document.getElementById("finTermV").textContent = term + " months";
+    document.getElementById("finSummary").textContent = "On " + M.eur(price) + " over " + term + " months with " + dep + "% deposit.";
+  }
+  [fp, fd, ft].forEach(function (el) { el.addEventListener("input", calc); }); calc();
+
+  /* newsletter */
+  document.getElementById("newsForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("newsEmail");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) { email.focus(); window.MERIDIAN_TOAST("Enter a valid email to join."); return; }
+    email.value = "";
+    window.MERIDIAN_TOAST("You're on the register. Watch your inbox.");
+  });
+})();
+</script>
+</body>
+</html>
