@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare — Meridian</title>
+<meta name="description" content="Compare up to three Meridian motorcars side by side — performance, specification and price.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+  .page-head { padding-top: calc(var(--nav-h) + var(--s7)); padding-bottom: var(--s5); }
+  .ctable { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .ctable th, .ctable td { text-align: left; padding: var(--s4) var(--s5); border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .ctable thead th { border-bottom: 1px solid var(--line-2); vertical-align: bottom; width: 30%; }
+  .ctable tbody th { font-family: var(--f-num); font-weight: 600; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); width: 190px; }
+  .ctable .rowkey { font-family: var(--f-num); font-weight: 600; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .ctable td .num { font-family: var(--f-num); font-weight: 700; }
+  .cbest { color: var(--gold) !important; position: relative; }
+  .cbest::after { content: "Best"; font-family: var(--f-num); font-weight: 700; font-size: .54rem; letter-spacing: .12em; text-transform: uppercase; background: color-mix(in srgb, var(--gold) 18%, transparent); color: var(--gold); padding: 2px 7px; border-radius: var(--rp); margin-left: 9px; vertical-align: middle; }
+  .chead { display: flex; flex-direction: column; gap: var(--s3); }
+  .chead__media { border-radius: var(--r2); overflow: hidden; aspect-ratio: 16/10; }
+  .chead__rm { align-self: flex-start; }
+  .cwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r3); background: var(--surface); }
+  @media (max-width: 720px) { .ctable { min-width: 640px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav__in">
+    <a class="brand" href="index.html" aria-label="Meridian home">
+      <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="brand__word">MERI<b>D</b>IAN</span>
+    </a>
+    <div class="nav__links">
+      <a href="inventory.html">Inventory</a>
+      <a href="inventory.html?fuel=Electric">Electric</a>
+      <a href="compare.html" aria-current="page">Compare</a>
+      <a href="index.html#financing">Financing</a>
+      <a href="design-system.html">Design system</a>
+    </div>
+    <div class="nav__tools">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme"><span class="theme-toggle__knob"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg><svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
+      <button class="iconbtn" type="button" data-open-search aria-label="Search inventory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <button class="iconbtn" type="button" data-open-saved aria-label="Saved vehicles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="dot-badge" data-saved-count hidden>0</span></button>
+      <button class="iconbtn nav__menu" type="button" aria-expanded="false" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="shell page-head">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span>Compare</span></nav>
+    <h1 class="h1" style="margin-top:var(--s4)">Compare motorcars</h1>
+    <p class="lead">Up to three side by side. We highlight the strongest figure in each row.</p>
+  </div>
+  <div class="shell" style="padding-bottom:var(--s9)">
+    <div id="compareOut"></div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__grid">
+      <div><a class="brand" href="index.html"><svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M4 24 12 8l4 8 4-8 8 16" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand__word">MERI<b>D</b>IAN</span></a><p class="foot__note">A global house for performance and luxury motorcars. Inspected, certified, and delivered worldwide.</p></div>
+      <div><h5>Inventory</h5><ul><li><a href="inventory.html">All vehicles</a></li><li><a href="inventory.html?fuel=Electric">Electric</a></li><li><a href="compare.html">Compare</a></li></ul></div>
+      <div><h5>Buying</h5><ul><li><a href="index.html#financing">Financing</a></li><li><a href="inventory.html">Delivery</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="index.html">About</a></li><li><a href="index.html">Our houses</a></li></ul></div>
+      <div><h5>Support</h5><ul><li><a href="index.html">Contact</a></li><li><a href="design-system.html">Design system</a></li></ul></div>
+    </div>
+    <div class="foot__base"><span>© 2026 Meridian Motorcars. Vehicle names are trademarks of their respective manufacturers.</span><span>Munich · Milan · London · Dubai</span></div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function () {
+  var M = window.MERIDIAN, C = window.MERIDIAN_COMPARE;
+  var out = document.getElementById("compareOut");
+
+  /* Shareable ?ids= link: seed the compare store once so Remove stays in sync. */
+  var q = new URLSearchParams(location.search).get("ids");
+  if (q && !C.all().length) {
+    q.split(",").filter(function (x) { return M.byId(x); }).slice(0, 3).forEach(function (id) { C.toggle(id); });
+  }
+
+  function render() {
+    var ids = C.all();
+
+    if (ids.length < 2) {
+      out.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M21 15v6h-6"/></svg>' +
+        '<h3 class="h3">Pick at least two to compare</h3>' +
+        '<p>Add vehicles from the inventory using the Compare checkbox on any card. You can line up as many as three.</p>' +
+        '<a class="btn btn--gold" href="inventory.html">Go to inventory</a></div>';
+      return;
+    }
+    var cars = ids.map(M.byId);
+
+    var rows = [
+      ["Price", function (v) { return M.eur(v.price); }, "min", "price"],
+      ["Power", function (v) { return v.hp + " hp"; }, "max", "hp"],
+      ["Torque", function (v) { return v.torque + " Nm"; }, "max", "torque"],
+      ["0–100 km/h", function (v) { return v.zero.toFixed(1) + " s"; }, "min", "zero"],
+      ["Top speed", function (v) { return v.top + " km/h"; }, "max", "top"],
+      ["Fuel", function (v) { return v.fuel; }, null, null],
+      ["Gearbox", function (v) { return v.gearbox; }, null, null],
+      ["Drivetrain", function (v) { return v.drive; }, null, null],
+      ["Body", function (v) { return v.body; }, null, null],
+      ["Year", function (v) { return v.year; }, "max", "year"],
+      ["Condition", function (v) { return v.cond; }, null, null],
+      ["Location", function (v) { return v.city; }, null, null],
+      ["Est. monthly*", function (v) { return M.eur(Math.round(M.monthly(v.price * .85, 6.9, 48))); }, "min", function (v) { return M.monthly(v.price, 6.9, 48); }]
+    ];
+
+    function bestIndex(cars, key, dir) {
+      var vals = cars.map(function (v) { return typeof key === "function" ? key(v) : v[key]; });
+      var best = dir === "min" ? Math.min.apply(null, vals) : Math.max.apply(null, vals);
+      return vals.map(function (x) { return x === best; });
+    }
+
+    var html = '<div class="cwrap"><table class="ctable"><thead><tr><th></th>' +
+      cars.map(function (v) {
+        return '<th><div class="chead"><div class="chead__media plate">' + M.scene(v, { decorative: true }) + '</div>' +
+          '<div><p class="vcard__marque">' + M.esc(v.marque) + '</p>' +
+          '<p style="font-family:var(--f-display);font-weight:600;font-size:1.15rem;margin:2px 0">' + M.esc(v.name) + '</p></div>' +
+          '<button class="link-arrow chead__rm" type="button" data-compare="' + v.id + '" style="font-size:.66rem">Remove</button></div></th>';
+      }).join("") + '</tr></thead><tbody>';
+
+    rows.forEach(function (r) {
+      var flags = r[2] ? bestIndex(cars, r[3], r[2]) : cars.map(function () { return false; });
+      html += '<tr><th scope="row" class="rowkey">' + r[0] + '</th>' +
+        cars.map(function (v, i) {
+          return '<td class="num' + (flags[i] && cars.length > 1 ? " cbest" : "") + '">' + M.esc(String(r[1](v))) + '</td>';
+        }).join("") + '</tr>';
+    });
+
+    html += '<tr><th></th>' + cars.map(function (v) {
+      return '<td><a class="btn btn--gold btn--sm" href="vehicle.html?id=' + v.id + '">View</a></td>';
+    }).join("") + '</tr>';
+    html += '</tbody></table></div>' +
+      '<p class="help" style="margin-top:var(--s4)">*Estimated monthly on 48 months, 15% deposit, 6.9% APR representative. <a href="inventory.html" class="gold-text">Add more from inventory →</a></p>';
+
+    out.innerHTML = html;
+  }
+
+  window.MERIDIAN_ON_SYNC = render;
+  render();
+})();
+</script>
+</body>
+</html>
